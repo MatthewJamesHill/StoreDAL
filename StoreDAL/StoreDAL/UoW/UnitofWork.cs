@@ -3,26 +3,31 @@ using StoreDAL.Models;
 using StoreDAL.Repositories;
 using System;
 
-namespace StoreDAL.UoW
+namespace StoreDAL.UOW
 {
-    public class UnitofWork : IUnitofWork, IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private StoreContext _storeContext = new StoreContext();
+        private readonly StoreContext _storeContext;
 
-        public ICustomerRepository Customers => throw new NotImplementedException();
-
-        public IOrderRepository Orders => throw new NotImplementedException();
-
-        public IProductRepository Products => throw new NotImplementedException();
-
-        public void UpdateDatabase()
+        public UnitOfWork(StoreContext storeContext)
         {
-            throw new NotImplementedException();
+            _storeContext = storeContext;
+            Customers = new CustomerRepository(_storeContext);
+            Orders = new OrderRepository(_storeContext);
+            Products = new ProductRepository(_storeContext);
         }
 
-        //TODO: Implement IDisposable
+        public ICustomerRepository Customers { get; private set; }
+        public IOrderRepository Orders { get; private set; }
+        public IProductRepository Products { get; private set; }
+
+        public int SaveChanges()
+        {
+            return _storeContext.SaveChanges();
+        }
+
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -30,29 +35,15 @@ namespace StoreDAL.UoW
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
+                    _storeContext.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~UnitofWork() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
         }
         #endregion
     }

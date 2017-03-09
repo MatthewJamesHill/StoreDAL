@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StoreDAL.EF
 {
-    class StoreContext : DbContext
+    public class StoreContext : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }

@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreDAL.UoW
+namespace StoreDAL.UOW
 {
-    interface IUnitofWork
+    interface IUnitOfWork : IDisposable
     {
         ICustomerRepository Customers { get; }
         IOrderRepository Orders { get; }
         IProductRepository Products { get; }
 
-        void UpdateDatabase();
+        int SaveChanges();
     }
 }
