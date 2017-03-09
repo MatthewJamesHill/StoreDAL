@@ -1,7 +1,5 @@
-﻿using StoreDAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using StoreDAL.EF;
+using StoreDAL.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace StoreDAL.Repositories
@@ -10,6 +8,11 @@ namespace StoreDAL.Repositories
     {
         public OrderRepository(DbContext context) : base(context)
         {
+        }
+
+        private StoreContext StoreContext
+        {
+            get { return Context as StoreContext; }
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using StoreDAL.Models;
-using System;
+﻿using StoreDAL.EF;
+using StoreDAL.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace StoreDAL.Repositories
@@ -15,18 +14,23 @@ namespace StoreDAL.Repositories
         
         public IEnumerable<Product> GetProductsMaxPrice(double maxPrice)
         {
-            return Context.Set<Product>().Where(p => p.Price <= maxPrice);
+            return StoreContext.Products.Where(p => p.Price <= maxPrice);
         }
 
         public IEnumerable<Product> GetProductsMinPrice(double minPrice)
         {
-            return Context.Set<Product>().Where(p => p.Price >= minPrice);
+            return StoreContext.Products.Where(p => p.Price >= minPrice);
         }
 
         public IEnumerable<Product> GetProductsInPriceRange(double minPrice, double maxPrice)
         {
-            return Context.Set<Product>().Where(p => p.Price >= minPrice)
-                                         .Where(p => p.Price <= maxPrice);
+            return StoreContext.Products.Where(p => p.Price >= minPrice)
+                                        .Where(p => p.Price <= maxPrice);
+        }
+
+        private StoreContext StoreContext
+        {
+            get { return Context as StoreContext; }
         }
     }
 }
