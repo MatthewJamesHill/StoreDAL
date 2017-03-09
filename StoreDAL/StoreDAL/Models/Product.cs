@@ -8,5 +8,8 @@ namespace StoreDAL.Models
         public int SKU { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+
+        [Timestamp]
+        public byte[] Timestamp { get; set; }
     }
 }

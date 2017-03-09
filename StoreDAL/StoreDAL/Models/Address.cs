@@ -1,4 +1,6 @@
-﻿namespace StoreDAL.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StoreDAL.Models
 {
     public class Address
     {
@@ -8,6 +10,8 @@
         public string Line3 { get; set; }
         public string Postcode { get; set; }
 
+        [Timestamp]
+        public byte[] Timestamp { get; set; }
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
     }
